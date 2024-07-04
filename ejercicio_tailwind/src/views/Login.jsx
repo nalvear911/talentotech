@@ -10,10 +10,10 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validar usuario y contraseña
+
     if (username === 'admin' && password === '1234') {
       console.log('Inicio de sesión exitoso');
-      navigate('/home'); // Redirige al usuario a la página de administración
+      navigate('/bootcamp'); 
     } else {
       alert('Usuario o contraseña incorrectos');
     }

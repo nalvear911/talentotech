@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../img/logo_talento.png';
+import Logo from '../../img/logo_talento.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const EditModule = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { id, title, status, fecha_inicio, fecha_fin } = location.state || { id: null, title: '', status: '', fecha_inicio: '', fecha_fin: '' };
+  const { id_bootcamp, id, title, status, fecha_inicio, fecha_fin } = location.state || { id: null, title: '', status: '', fecha_inicio: '', fecha_fin: '' };
 
   const [moduleID, ] = React.useState(id);
   const [moduleTitle, setModuleTitle] = React.useState(title);
@@ -16,14 +16,20 @@ const EditModule = () => {
   const [moduleEndDate, setModuleEndDate] = React.useState(new Date(fecha_fin));
 
   const handleSave = async () => {
+    if (moduleStartDate > moduleEndDate) {
+      alert("La fecha de inicio no puede ser posterior a la fecha de fin");
+      return;
+    }
+
     const formData = {
+      bootcampID: id_bootcamp,
       id: moduleID,
       nombre_modulo: moduleTitle,
-      fecha_inicio: moduleStartDate.toISOString(), // Convierte a formato ISO para enviar al servidor
-      fecha_fin: moduleEndDate.toISOString(), // Convierte a formato ISO para enviar al servidor
+      fecha_inicio: moduleStartDate.toISOString(), 
+      fecha_fin: moduleEndDate.toISOString(), 
       estado: moduleStatus,
     };
-
+    console.log(formData);
     try {
       const response = await fetch(`http://localhost:3001/api/modulos/${id}`, {
         method: 'PUT',
@@ -38,10 +44,11 @@ const EditModule = () => {
       }
   
       console.log('Datos del módulo guardados:', formData);
-      navigate('/home');
+      navigate(`/bootcamps/modulos/${id_bootcamp}`);
     } catch (error) {
       console.error('Error al guardar el módulo:', error);
     }
+  
   };
   
   return (

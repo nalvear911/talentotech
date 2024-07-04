@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Logo from '../img/logo_talento.png';
+import Logo from '../../img/logo_talento.png';
 
 const NewModule = () => {
+  const { id } = useParams();
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const navigate = useNavigate();
-
+console.log(id)
   const handleSave = async () => {
+    if (startDate > endDate) {
+      alert("La fecha de inicio no puede ser posterior a la fecha de fin");
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3001/api/modulos', {
         method: 'POST',
@@ -21,6 +27,7 @@ const NewModule = () => {
           nombre_modulo: title,
           fecha_inicio: startDate,
           fecha_fin: endDate,
+          bootcampID:id
         }),
       });
       
@@ -28,11 +35,11 @@ const NewModule = () => {
         throw new Error('Error al crear el módulo');
       }
 
-      console.log('Nuevo módulo creado:', { title, startDate, endDate });
-      navigate('/home');
+      console.log('Nuevo módulo creado:', { title, startDate, endDate, id });
+      navigate(`/bootcamps/modulos/${id}`);
     } catch (error) {
       console.error('Error al guardar el módulo:', error);
-      // Manejo de errores: podrías mostrar un mensaje al usuario
+
     }
   };
 

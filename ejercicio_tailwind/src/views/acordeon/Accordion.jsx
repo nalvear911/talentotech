@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Accordion = ({ id, title, fecha_inicio, fecha_fin, status, progress }) => {
+const Accordion = ({ id_bootcamp, id, title, fecha_inicio, fecha_fin, status, progress }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -15,13 +15,18 @@ const Accordion = ({ id, title, fecha_inicio, fecha_fin, status, progress }) => 
 
   const editModule = () => {
     console.log('id modulo' + id);
-    navigate(`/editar-modulo`, { state: { id, title, fecha_inicio, fecha_fin, status, progress } });
-  };
+      navigate(`/editar-modulo`, { state: { id_bootcamp, id, title, fecha_inicio, fecha_fin, status, progress } });
+    };
 
   const formatDate = (date) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return new Date(date).toLocaleDateString('es-ES', options);
   };
+  const viewSessions = () => {
+    navigate(`/modulos/${id}/sesiones`);
+  };
+
+
 
   return (
     <div className="accordion-container bg-white border border-gray-300 rounded-lg shadow-lg mb-6 w-full sm:w-[calc(100%)] hover:bg-gray-200 transition-colors duration-300">
@@ -48,14 +53,19 @@ const Accordion = ({ id, title, fecha_inicio, fecha_fin, status, progress }) => 
         </div>
       </div>
       {isOpen && (
-        <div className="accordion-content p-4">
-          <button onClick={goAsistance} className="mt-4 bg-[#072563] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 mr-4">
-            Lista asistencia
-          </button>
-          <button onClick={editModule} className="mt-4 bg-[#072563] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
-            Editar
-          </button>
-        </div>
+       <div className="accordion-content p-4 flex justify-between items-center">
+       <div>
+         <button onClick={goAsistance} className="mt-4 bg-[#072563] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 mr-4">
+           Lista asistencia
+         </button>
+         <button onClick={editModule} className="mt-4 bg-[#072563] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+           Editar
+         </button>
+       </div>
+       <button onClick={viewSessions} className="mt-4 bg-[#072563] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+         Ver Sesiones
+       </button>
+     </div>
       )}
     </div>
   );

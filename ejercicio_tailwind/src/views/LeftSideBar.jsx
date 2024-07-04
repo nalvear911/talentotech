@@ -6,9 +6,12 @@ export default function LeftSideBar() {
   const navigate = useNavigate();
 
   const returnHome = () => {
-    navigate('/home');
+    navigate('/bootcamp');
   };
 
+  const goNotas = () => {
+    navigate('/lista-notas');
+  }
 
 
   return (
@@ -38,7 +41,8 @@ export default function LeftSideBar() {
             <span className="material-symbols-outlined mr-2 hover:text-gray-800">home</span>
             <span>Inicio</span>
           </button>
-          <button className="bg-white text-gray-600 hover:bg-gray-200 hover:border-gray-300 px-6 py-2 rounded-md flex items-center border border-transparent w-80">
+          <button className="bg-white text-gray-600 hover:bg-gray-200 hover:border-gray-300 px-6 py-2 rounded-md flex items-center border border-transparent w-80"
+          onClick={returnHome}>
             <span className="material-symbols-outlined mr-2 hover:text-gray-800">bookmark</span>
             <span>Bootcamp</span>
           </button>
@@ -52,9 +56,10 @@ export default function LeftSideBar() {
             <span>Mi perfil</span>
           </button>
           <hr className="w-full mb-4 border-gray-300" />
-          <button className="bg-white text-gray-600 hover:bg-gray-200 hover:border-gray-300 px-6 py-2 rounded-md flex items-center border border-transparent w-80">
+          <button className="bg-white text-gray-600 hover:bg-gray-200 hover:border-gray-300 px-6 py-2 rounded-md flex items-center border border-transparent w-80"
+           onClick={goNotas}>
             <span className="material-symbols-outlined mr-2 hover:text-gray-800">work</span>
-            <span>Job Connections</span>
+            <span>Notas</span>
           </button>
           <button className="bg-white text-gray-600 hover:bg-gray-200 hover:border-gray-300 px-6 py-2 rounded-md flex items-center border border-transparent w-80">
             <span className="material-symbols-outlined mr-2 hover:text-gray-800">menu_book</span>
